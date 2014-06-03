@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Introduction to R - Maine Pollen Camp</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Introduction to R - Maine Pollen Camp</h1>
+
+<p>by Simon Goring</p>
+
+<p>The popularity of R is rapidly increasing in scientific research.  R has several advantages over other programming languages: it is free, it is fairly powerful, there is an excellent user community, and it was designed with the statistical analysis of data in mind.</p>
+
+<p>Certainly other programming languages exist, Matlab and Python are two standard examples, one paid, the other open source.  Regardless, I can only teach you about one language, and I know R, so that&#39;s what you&#39;re going to learn.  The other advantage of R is that there has been considerable development of tools for paleoecologists and other pollen workers, which makes it an attractive tool for this workshop.  There&#39;s also lots of resources for help available, and I&#39;ve written about some of them (here)[<a href="http://downwithtime.wordpress.com/2014/05/22/r-tips-i-wish-i-had-learned-earlier-getting-help-in-r/">http://downwithtime.wordpress.com/2014/05/22/r-tips-i-wish-i-had-learned-earlier-getting-help-in-r/</a>].</p>
+
+<p>You are certainly welcome to try to do this workshop using a different programming language, but there will be less support.  Also, these teaching materials are available in R Markdown, HTML and GitHub flavored Markdown, which means that all code is available in R.  Effectively, this tutorial and workshop comes with a solutions manual for R.  If you want to make one for Python, go ahead.  It would be awesome!</p>
+
+<h1>Setting Up for the Workshop</h1>
+
+<p>You should make a folder for this workshop to keep your files together.  I suggest creating a directory structure that looks like this:</p>
+
+<p><code>Simons_Amazing_Workshop</code><br>
+  +&ndash; <code>R</code><br>
+  +&ndash; <code>data</code><br>
+  |     +&ndash; <code>input</code><br>
+  |     +&ndash; <code>output</code><br></p>
+
+<p>Maybe you can change the name of the top level directory, but I suggest keeping the names of the rest of the files.  There is some good advice on the <a href="http://nicercode.github.io/blog/2013-04-05-projects/">Nice R</a> blog.  I like to keep the input and output folders together within the <code>data</code> directory.  This is because I tend to like fewer folders, and because I find that I use a lot of intermediate files in my analysis, I like to have things in the data folder so that everything I use for analysis comes from the same parent folder.</p>
+
+<p>I tend to use R Markdown for most of my analysis.  I keep a &#39;control&#39; file in the main directory, that then calls routines out of the <code>R</code> directory.  I like this structure because I like mapping out my projects beforehand, and I like keeping the seperate pieces of analysis, well, seperate.</p>
+
+<p>So, now that you&#39;ve got your folders set up, we need to put things into them:</p>
+
+<h1>Opening Files, Your First Look at Pollen:</h1>
+
+<p>We want people to be on the same page, or at least, have some basic background before we start the course.  To do that it helps if you&#39;ve looked at some pollen data, and this data will be used throughout the course for our analysis to provide a framework for learning about pollen analysis with R.</p>
+
+<p>So, let&#39;s look at some pollen data.  The North American Modern Pollen Database is located online at Konrad Gajewski&#39;s Laboratory for Paleoclimatology and Climatology <a href="http://www.lpc.uottawa.ca/data/modern/">website</a>.  The NAMPD was published as part of Whitmore et al. (<a href="http://dx.doi.org/10.1016/j.quascirev.2005.03.005">2005</a>), a large, continental scale dataset.  Download the file into your <code>data/input</code> folder and extract it.  You&#39;ll see it is an Excel file inside a folder called <code>modern</code>.  R doesn&#39;t have native support for opening Excel files (although there is a package for it), but we&#39;ll get to that later.  First, lets look at the file.</p>
+
+<p>There are multiple sheets in the spreadsheet:</p>
+
+<table><thead>
+<tr>
+<th>Sheet</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>UPDATE HISTORY</td>
+<td>Details of changes to the database.</td>
+</tr>
+<tr>
+<td>METADATA</td>
+<td>Information about the publications, and each of the tables in the database.</td>
+</tr>
+<tr>
+<td>POLLEN DATA</td>
+<td>The actual count or percentage data associated with the database.</td>
+</tr>
+<tr>
+<td>CLIMATE+BIOCLIMATE</td>
+<td>Climate data from Pat Bartlein, more information in Whitmore et al. (2005)</td>
+</tr>
+<tr>
+<td>AVHRR</td>
+<td>AVHRR data interpreted using Feverova (1994).</td>
+</tr>
+<tr>
+<td>POSITIONAL ERRORS</td>
+<td>Positional errors.</td>
+</tr>
+<tr>
+<td>REMOVED POLLEN SITES</td>
+<td>Sites removed or moved.</td>
+</tr>
+<tr>
+<td>EAST_WEST</td>
+<td>Pollen types broken into classes based on geography.</td>
+</tr>
+</tbody></table>
+
+<p>For the purposes of this analysis we are interested in both pollen and climate data.  There are several ways of doing this:</p>
+
+<ol>
+<li> Save worksheets as csv files to read into R.</li>
+<li> Read data in from the <code>analogue</code> package.</li>
+</ol>
+
+<p>At this point I assume you&#39;ve already installed R and RStudio.  If not, install R using this <a href="http://cran.rstudio.com/">link</a> and RStudio from <a href="http://www.rstudio.com/ide/download/desktop">this</a> link.  We&#39;re going to work through each of these scenarios:</p>
+
+<h2>1.  Save Worksheet as CSV, Open in R.</h2>
+
+<p>Open up the excel file.  For each of the Pollen and Climate sheets within the spreadhseet click <code>Save As</code>, save as &#39;Text CSV&#39;, or &#39;CSV - comma delimited&#39;.  Tab delimited would be fine too.  I use comma separated because the delimitation is clearer than a tab (i.e., it is visible in a document), and it&#39;s human readable, meaning anyone can open up the file using a text reader and figure out what the data looks like.</p>
+
+<p>Once the files are saved you should have a <code>data/input</code> folder that looks like this (you don&#39;t have to use my naming conventions):</p>
+
+<p><code>Simons_Amazing_Workshop</code><br>
+  +&ndash; <code>R</code><br>
+  +&ndash; <code>data</code><br>
+  |    +&ndash; <code>input</code><br>
+  |    |    +&ndash; <code>mpd_pollen.csv</code><br>
+  |    |    +&ndash; <code>mpd_clim.csv</code><br></p>
+
+<p>To read it into R you need to use the command <code>read.csv</code>, make sure you&#39;re in the proper working directory using <code>setwd</code>.  RStudio lets you do this very easily, under the &#39;Session&#39; drop-down menu (Session &gt; Set Working Directory), but you might want write this directly into the code.</p>
+
+<p>To open the file we need to both open the file in R using <code>read.csv</code> (us <code>?read.csv</code> to find help) and assign it to a variable.  Let&#39;s call the new variables <code>pollen</code> and <code>climate</code>.  </p>
+
+<pre><code class="r">pollen &lt;- read.csv(&quot;data/input/mpd_pollen.csv&quot;, stringsAsFactors = FALSE)
+climate &lt;- read.csv(&quot;data/input/mpd_climate.csv&quot;, stringsAsFactors = FALSE)
+</code></pre>
+
+<p>We set the variable <code>stringsAsFactors</code> because R has default behaviour that sets strings to a variable type called a <code>factor</code> by default.  Because this table has columns that contain both text and numbers R has default behaviour to read in the table as a data object called a <code>data.frame</code>.  You can read more about data types, including vectors, matrices and lists <a href="http://www.statmethods.net/input/datatypes.html">here</a>.  For the mostpart we will be using  <code>data.frame</code> and <code>list</code> objects.</p>
+
+<h2>2.  Read data in from the <code>analogue</code> package.</h2>
+
+<p>Now we&#39;ve got the data into R from file.  We can also find pollen data in the <code>analogue</code> package for R.  This is a seperate package in addition to the base R program.  To install it you need internet access, and then the function <code>install.packages</code>.  Pacakges are sets of data, functions and objects that generally have a common theme.  <code>analogue</code> is one of the primary paleoecological packages, written by Gavin Simpson.  You need to install it using the R function <code>install.packages</code>.  It may ask you to select a repository from which to install, choose the one closest to you.</p>
+
+<pre><code>install.packages(&#39;analogue&#39;)
+</code></pre>
+
+<p>You also need to load the package into memory using the <code>library</code> command: <code>library(analogue)</code>.  This way all the functions and datasets within the package are available in R.  To load data from packages you can use the command <code>data</code>.  If you look at the help for <code>analogue</code> using the <code>?</code> you&#39;ll see a dataset called <code>Pollen</code> and a dataset called <code>Climate</code>.  We can put this datset into memory using: <code>data(Pollen)</code> and <code>data(Climate)</code>.  Now, in that case the dataset is loaded with a capital &#39;P&#39; and &#39;C&#39;, where we used lower case letters when we loaded the data into memory from file.  Lets look at the two different datasets.</p>
+
+<h2>Looking at Data</h2>
+
+<p>The pollen and climate tables are now in memory, and we can find a little bit about them using some basic commands.  R provides a number of ways to look at datasets.  First, look at the dimensions of the datasets using the <code>dim</code> function.  Apply the function to the dataset using <code>dim(pollen)</code>.  What are the dimensions of each of the datasets?</p>
+
+<p>Notice that the <code>pollen</code> dataset is bigger than the <code>climate</code> dataset, and the <code>Climate</code> and <code>Pollen</code> dataset.  Why does it have extra rows?  Who knows.</p>
+
+<p>How do you find column names?  Try seaching for the term <code>column</code> using either <code>??&#39;column name&#39;</code> or <code>help.search(&#39;column name&#39;)</code>.  Can you find the right function?</p>
+
+<p>Lets use the <code>Pollen</code> and <code>Climate</code> datasets from here on in.  Find the column names of the <code>Pollen</code> dataset and the column names of the <code>Climate</code> dataset.</p>
+
+<p>Once you know the column names you can start looking at values within each column.  Pollen data is generally recorded as counts in the NAMPD, or whole number percentages, but we usually evaluate it as percentages.  To convert the values to proportions we can divide each entry in a row by the sum of the row.  See if you can use <code>help.search</code> to figure out how to get the sum of a row.  Send the results of the function to a varaible called <code>pol.sums</code>.  Once you have the row sums you can divide the pollen data.frame by those sums to get pollen proportions.</p>
+
+<pre><code class="r">pol.pct &lt;- Pollen/pol.sums
+</code></pre>
+
+<p>This effectively divides each value in each row of the Pollen matrix by the corresponding row sum.  We now have pollen proportions for each of the&hellip; how many pollen types are there? (hint: use <code>ncol</code>).</p>
+
+<p>There are a few basic plotting functions, including <code>plot</code> and <code>hist</code>.  See if you can use these functions to first plot out individual columns in the <code>pol.pct</code> and <code>Climate</code> variables, and then see if you can plot the data to get a sense of its structure.  You can also use the function <code>summary</code> to look at the data structure.</p>
+
+<p>Try plotting variables against one another.  You can use tab completion here as well.  Typing tab after the $ will give you a list of possible column names to use.  The $ indicates that you are calling a specific column.</p>
+
+<pre><code class="r">plot(pol.pct$ABIES, Climate$tjul)
+</code></pre>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANgAAAH4CAMAAAAfJdNdAAAAkFBMVEX9/v0AAAAAADkAAGUAOTkAOY8AZrU5AAA5ADk5AGU5OWU5OY85ZrU5j9plAABlADllAGVlOQBlOY9lZjllZmVltdpltf2POQCPOTmPOWWPZgCPZo+PjzmPtY+P27WP29qP2/21ZgC124+1/rW1/v3ajzna24/a/rXa/tra/v39tWX924/929r9/rX9/tr9/v3uFo4RAAAAMHRSTlP//////////////////////////////////////////////////////////////wBipdB4AAAACXBIWXMAAAsSAAALEgHS3X78AAANLUlEQVR4nO2dDWPbthGGS3eRk3mys3aT03lrrC5qamkW/v+/m0ASHySBAwngQB56b1pbpugDHh/u8EEY/kFUqh/WrgCWGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGIyaGMyhZl0hgiV8b7oYLLtpZDFYdtPIYrDsppHFYB69f/4m3h+b5sPbUtPIygAm2cTlb0tNIysD2OXhrfPc1HRwZIOnZLDHu6+/SI89TNpi0xpfiyw9eVyfm504/zhxGHkwwHRlYNbEgXCMict9sz82jbMpUga7Ph/E8UZVXfKQaf6896R7ymDSY1LVeezWkUmyU3UxFm8aWQyW3TSyGCy7aWQxWHbTyGKw7KaRxWDZTSMLG2y10SIy2HrjewaLM10r2IyHwVji5bcY0ys6jMGiTNcLFi4ATeyxGNMMhiAGizHNYAhisBjTDIYgBosxzWAIYrAY0wyGIAaLMU0a7HLfVt+9+40wmNrAcp7unaUNprYa+bYckV0wneExokvccgu3N8b6f2uoQFasBszsMKUcY+AOU8pZEd5hShgM3mFKGAzeYUoYDNxhShoMMj39zd1yoEX6scZcKvZcicFiTNcNVm+MrSMGizHNYAhisBjTtYOtQldoaaA8GYPFmK4crNoYW0cMFmOawRBUeD5WTmVn0AVVwmMMllMcYzGm686KCRZSxGAxphkMQQwWY3q9ZM9gcabrBkuwkCL2WIzp9YbADOYVeIYpcTD/GaaUYww8w5RyVoTPMCUMBp9h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" alt="plot of chunk unnamed-chunk-4"/> </p>
+
+<p>Do some plotting among other variables.  Typically we look at July temperature and Annual Precipitation, but you&#39;re not limited to these variables.</p>
+
+<p>If you&#39;ve gotten this far then great!  If you&#39;re having trouble please let me know, and I&#39;ll see you next week.</p>
+
+<p>Thanks.</p>
+
+</body>
+
+</html>
+
